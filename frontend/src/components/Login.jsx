@@ -56,8 +56,7 @@ const Login = () => {
             axios.post(LOGIN, formState)
             .then((res) => {
                 if (res.data.token) {
-                    console.log(res.data.token);
-                    document.cookie = `token=${res.data.token};SameSite=Strict;Secure`;
+                    localStorage.setItem('token', res.data.token);
                     setFormState({
                         username: "",
                         password: "",
@@ -71,7 +70,7 @@ const Login = () => {
                 }
             })
             .catch((err) => {
-                if (err.response.status === 401) {
+                if (err.response && err.response.status === 401) {
                     setPopup({
                         state: true,
                         message: "Invalid credentials"

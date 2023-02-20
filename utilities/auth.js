@@ -31,6 +31,7 @@ const verifyToken = async (token) => {
 };
 
 const verifyTokenMiddleware = async (req, _res, next) => {
+    console.log(req.headers.authorization);
     if (!req.headers.authorization) {
         req.user = null;
         return next();
@@ -62,27 +63,6 @@ const protectedRoute = async (req, res, next) => {
         });
     }
 };
-
-
-// const verifyTokenMiddleware = (req, res, next) => {
-//     if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
-//         req.user = null;
-//         return next();
-//     }
-
-//     const token = req.headers.authorization.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, '$1');
-
-//     verifyToken(token)
-//         .then((decoded) => {
-//             req.user = decoded;
-//             next();
-//         })
-//         .catch((err) => {
-//             req.user = null;
-//             next();
-//         });
-// };
-
 
 module.exports = {
     hashPassword,

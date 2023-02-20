@@ -8,7 +8,7 @@
     "backend-install": "npm install",
     "install": "npm run frontend-install",
     "frontend": "cd frontend && npm start",
-    "backend": "node index.js",
+    "backend": "nodemon index.js",
     "start": "concurrently \"npm run backend\" \"npm run frontend\""
   },
   "author": "CinematicGenius007",
@@ -24,6 +24,7 @@
     "http-errors": "^2.0.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.9.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.20"
   }
 }

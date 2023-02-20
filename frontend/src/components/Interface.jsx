@@ -27,18 +27,10 @@ const Interface = () => {
     });
 
     const getJwtToken = () => {
-        if (document.cookie.split('=')[1] === undefined) {
-            navigate("/login");
-        } else if (document.cookie.split('=')[0] !== "token") {
-            let cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                if (cookies[i].split('=')[0] === "token") {
-                    return cookies[i].split('=')[1];
-                }
-            }
-        } else {
-            return document.cookie.split('=')[1];
+        if (!localStorage.getItem('token')) {
+            navigate('/login');
         }
+        return localStorage.getItem('token');
     }
 
     const refreshTaskList = () => {
@@ -169,9 +161,14 @@ const Interface = () => {
         }
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        navigate('/');
+    };
+
     useEffect(() => {
         refreshTaskList();
-	// eslint-disable-next-line
+    	// eslint-disable-next-line
     }, []);
     
     useEffect(() => {}, [taskList]);
@@ -182,6 +179,7 @@ const Interface = () => {
             <section className="flex-1 text-orange-dark p-6">
                 <div className="flex justify-between items-center">
                     <h2 className="text-3xl">Tasks</h2>
+                    <button className="flex items-center py-1 px-4 rounded-lg bg-orange-dark hover:bg-orange-light text-dark text-lg transition-colors duration-500" onClick={handleLogout}>Logout</button>
                 </div>
                 <div className="flex justify-center items-center gap-8 mt-16 mb-10 mx-auto w-full max-w-xl">
                     <input name="newTask" value={newTask} onChange={(e) => setNewTask(e.target.value)} className="py-1 px-4 bg-gray-dark-600 outline-none rounded text-lg" placeholder="Type in the task" />

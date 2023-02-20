@@ -15,8 +15,6 @@ router.post('/login', async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    console.log(username, password);
-
     const db = req.db;
     const userCollection = db.collection('users');
 
@@ -32,7 +30,6 @@ router.post('/login', async (req, res) => {
                 const result = await comparePassword(password, user.password);
                 if (result) {
                     const token = await generateToken(user);
-                    console.log(token);
                     res.status(200).json({
                         token: token,
                     });
